@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>by.volkov</groupId>
-    <artifactId>restaurant-voiting</artifactId>
+    <artifactId>restaurant-voting</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>restaurant-voiting</name>
+    <name>restaurant-voting</name>
     <description>Spring Boot 2.x HATEOAS application</description>
 
     <properties>

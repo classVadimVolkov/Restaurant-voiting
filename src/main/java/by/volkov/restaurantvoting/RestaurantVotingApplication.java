@@ -1,13 +1,13 @@
-package by.volkov.restaurantvoiting;
+package by.volkov.restaurantvoting;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RestaurantVoitingApplication {
+public class RestaurantVotingApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RestaurantVoitingApplication.class, args);
+        SpringApplication.run(RestaurantVotingApplication.class, args);
     }
 
 }
