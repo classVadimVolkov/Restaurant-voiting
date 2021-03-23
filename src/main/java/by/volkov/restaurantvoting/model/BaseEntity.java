@@ -3,9 +3,7 @@ package by.volkov.restaurantvoting.model;
 import lombok.*;
 import org.springframework.data.util.ProxyUtils;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
@@ -15,6 +13,9 @@ import javax.persistence.MappedSuperclass;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public abstract class BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
     public int getId() {
