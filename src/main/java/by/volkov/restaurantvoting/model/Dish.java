@@ -6,30 +6,27 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
 @Entity
-@Table(name = "restaurant")
+@Table(name = "dish")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString(callSuper = true)
-public class Restaurant extends BaseEntity {
+public class Dish extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     @NotBlank
-    @Size(min = 2, max = 100)
+    @Size(min = 2, max = 150)
     private String name;
 
-    @Column(name = "vote")
-    private int vote;
+    @Column(name = "price")
+    @Size
+    private int price;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     @NotNull
-    private User user;
-
-    @OneToMany(mappedBy = "restaurant")
-    private Set<Dish> dishes;
+    private Restaurant restaurant;
 }
