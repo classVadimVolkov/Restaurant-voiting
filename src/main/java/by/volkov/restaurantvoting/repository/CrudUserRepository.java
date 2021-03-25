@@ -22,5 +22,5 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
     User vote(int id, int votedRestaurantId);
 
     @Query("SELECT u.voted FROM User u WHERE u.id=:id")
-    boolean hasVoted(int id, boolean voted);
+    boolean hasVoted(int id);
 }

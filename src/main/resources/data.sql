@@ -7,10 +7,10 @@ VALUES ('USER', 1),
        ('ADMIN', 2),
        ('USER', 2);
 
-INSERT INTO RESTAURANT (name, vote, user_id)
-VALUES ('Винтаж', 0, 2),
-       ('Bellagio', 0, 2),
-       ('Габрово', 0, 2);
+INSERT INTO RESTAURANT (name, user_id)
+VALUES ('Винтаж', 2),
+       ('Bellagio', 2),
+       ('Габрово', 2);
 
 INSERT INTO DISH (name, price, restaurant_id)
 VALUES ('Мясо по-французски', 550, 1),
