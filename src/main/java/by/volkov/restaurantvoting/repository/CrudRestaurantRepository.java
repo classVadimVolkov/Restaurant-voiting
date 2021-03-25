@@ -11,8 +11,8 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Restaurant r WHERE r.id=:id")
-    int delete(int id);
+    @Query("DELETE FROM Restaurant r WHERE r.user.id=:userId AND r.id=:id")
+    int delete(int id, int userId);
 
     Restaurant getByName(String name);
 }
