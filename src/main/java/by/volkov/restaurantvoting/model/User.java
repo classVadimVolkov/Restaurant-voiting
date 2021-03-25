@@ -47,5 +47,5 @@ public class User extends BaseEntity {
     private boolean voted;
 
     @Column(name = "voted_restaurant_id")
-    private Integer votedRestarauntId;
+    private Integer votedRestaurantId;
 }
