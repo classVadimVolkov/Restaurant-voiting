@@ -17,7 +17,7 @@ import java.util.Set;
 @ToString(callSuper = true)
 public class Restaurant extends BaseEntity {
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     @NotBlank
     @Size(min = 2, max = 100)
     private String name;
