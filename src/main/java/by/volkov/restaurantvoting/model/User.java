@@ -45,4 +45,7 @@ public class User extends BaseEntity {
 
     @Column(name = "voted", nullable = false, columnDefinition = "bool default false")
     private boolean voted;
+
+    @Column(name = "voted_restaurant_id")
+    private Integer votedRestarauntId;
 }

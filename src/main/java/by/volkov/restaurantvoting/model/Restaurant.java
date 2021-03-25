@@ -22,9 +22,6 @@ public class Restaurant extends BaseEntity {
     @Size(min = 2, max = 100)
     private String name;
 
-    @Column(name = "vote")
-    private int vote;
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull
