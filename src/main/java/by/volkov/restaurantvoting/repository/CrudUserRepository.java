@@ -18,8 +18,8 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE User u SET u.voted=true, u.votedRestaurantId=:votedRestaurantId WHERE u.id=:id")
-    User vote(int id, int votedRestaurantId);
+    @Query("UPDATE User u SET u.voted=:voted, u.votedRestaurantId=:votedRestaurantId WHERE u.id=:id")
+    User vote(boolean voted, int id, int votedRestaurantId);
 
     @Query("SELECT u.voted FROM User u WHERE u.id=:id")
     boolean hasVoted(int id);
