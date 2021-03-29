@@ -36,7 +36,7 @@ public class ValidationUtil {
     public static void assureIdConsistent(BaseEntity entity, int id) {
         if (entity.isNew()) {
             entity.setId(id);
-        } else if (entity.getId() != id) {
+        } else if (entity.id() != id) {
             throw new IllegalArgumentException(entity + " must be with id=" + id);
         }
     }
