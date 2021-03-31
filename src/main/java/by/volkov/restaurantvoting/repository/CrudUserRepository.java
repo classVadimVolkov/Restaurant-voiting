@@ -4,6 +4,7 @@ import by.volkov.restaurantvoting.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly = true)
@@ -14,6 +15,7 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
     @Query("DELETE FROM User u WHERE u.id=:id")
     int delete(int id);
 
+    @RestResource(rel = "by-email", path = "by-email")
     User getByEmail(String email);
 
     @Transactional
