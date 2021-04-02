@@ -1,7 +1,11 @@
 package by.volkov.restaurantvoting.model;
 
+import by.volkov.restaurantvoting.util.JsonDeserializers;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -34,6 +38,8 @@ public class User extends BaseEntity implements Serializable {
 
     @Column(name = "password")
     @Size(max = 256)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonDeserialize(using = JsonDeserializers.PasswordDeserializer.class)
     private String password;
 
     @Column(name = "role")
@@ -49,4 +55,8 @@ public class User extends BaseEntity implements Serializable {
 
     @Column(name = "voted_restaurant_id")
     private Integer votedRestaurantId;
+
+    public void setEmail(String email) {
+        this.email = StringUtils.hasText(email) ? email.toLowerCase() : null;
+    }
 }
