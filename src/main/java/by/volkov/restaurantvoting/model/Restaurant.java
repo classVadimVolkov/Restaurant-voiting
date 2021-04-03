@@ -18,8 +18,8 @@ import java.util.Set;
 public class Restaurant extends BaseEntity {
 
     @Column(name = "name", nullable = false, unique = true)
-    @NotBlank
-    @Size(min = 2, max = 100)
+    @NotBlank(message = "Name is mandatory")
+    @Size(min = 2, max = 100, message = "Length of name should be from 2 to 100 characters")
     private String name;
 
     @ManyToOne

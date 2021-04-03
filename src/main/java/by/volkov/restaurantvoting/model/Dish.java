@@ -17,12 +17,11 @@ import javax.validation.constraints.Size;
 public class Dish extends BaseEntity {
 
     @Column(name = "name", nullable = false)
-    @NotBlank
-    @Size(min = 2, max = 150)
+    @NotBlank(message = "Name is mandatory")
+    @Size(min = 2, max = 150, message = "Length of name should be from 2 to 150 characters")
     private String name;
 
     @Column(name = "price")
-    @Size
     private int price;
 
     @ManyToOne
