@@ -23,17 +23,19 @@ import java.util.Set;
 @ToString(callSuper = true, exclude = {"password"})
 public class User extends BaseEntity implements Serializable {
     @Column(name = "email", nullable = false, unique = true)
-    @Email
-    @NotEmpty
-    @Size(max = 120)
+    @Email(message = "Email should be valid")
+    @NotEmpty(message = "Email is mandatory")
+    @Size(max = 120, message = "Length of email must be less than 120 characters")
     private String email;
 
     @Column(name = "first_name")
-    @Size(max = 128)
+    @Size(max = 128, message = "Length of first name must be less than 128 characters")
+    @NotEmpty(message = "First name is mandatory")
     private String firstName;
 
     @Column(name = "last_name")
-    @Size(max = 128)
+    @Size(max = 128, message = "Length of second name must be less than 128 characters")
+    @NotEmpty(message = "Second name is mandatory")
     private String lastName;
 
     @Column(name = "password")

@@ -1,8 +1,8 @@
 package by.volkov.restaurantvoting.config;
 
 import by.volkov.restaurantvoting.AuthUser;
-import by.volkov.restaurantvoting.model.User;
 import by.volkov.restaurantvoting.model.Role;
+import by.volkov.restaurantvoting.model.User;
 import by.volkov.restaurantvoting.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
