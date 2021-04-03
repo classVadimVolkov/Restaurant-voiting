@@ -37,14 +37,14 @@ public class AdminController {
     public Optional<User> getUser(@PathVariable int id) {
         Optional<User> user = userRepository.findById(id);
         log.info("get User {}", user);
-        return user;
+        return ValidationUtil.checkNotFoundWithId(user, id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable int id) {
         log.info("delete User with id={}", id);
-        userRepository.deleteById(id);
+        ValidationUtil.checkNotFoundWithId(userRepository.delete(id), id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -70,12 +70,12 @@ public class AdminController {
         if (user.getPassword() == null) {
             user.setPassword(oldUser.getPassword());
         }
-        userRepository.save(user);
+        ValidationUtil.checkNotFoundWithId(userRepository.save(user), user.id());
     }
 
     @GetMapping(value = "/search/by-email", produces = MediaType.APPLICATION_JSON_VALUE)
     public Optional<User> getUserByEmail(@RequestParam String email) {
         log.info("get User by email {}", email);
-        return userRepository.findByEmailIgnoreCase(email);
+        return ValidationUtil.checkNotFound(userRepository.findByEmailIgnoreCase(email), "email=" + email);
     }
 }
