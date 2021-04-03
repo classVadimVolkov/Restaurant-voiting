@@ -70,7 +70,7 @@ public class AdminController {
         if (user.getPassword() == null) {
             user.setPassword(oldUser.getPassword());
         }
-        ValidationUtil.checkNotFoundWithId(userRepository.save(user), user.id());
+        ValidationUtil.checkNotFoundWithId(userRepository.save(user), id);
     }
 
     @GetMapping(value = "/search/by-email", produces = MediaType.APPLICATION_JSON_VALUE)
