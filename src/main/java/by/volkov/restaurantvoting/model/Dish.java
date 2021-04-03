@@ -1,10 +1,11 @@
 package by.volkov.restaurantvoting.model;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -26,6 +27,6 @@ public class Dish extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
-    @NotNull
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
 }
