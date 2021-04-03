@@ -24,7 +24,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class AccountController {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public User get(@AuthenticationPrincipal AuthUser authUser) {
