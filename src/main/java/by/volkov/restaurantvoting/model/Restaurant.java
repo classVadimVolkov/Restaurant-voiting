@@ -1,5 +1,6 @@
 package by.volkov.restaurantvoting.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -23,11 +24,12 @@ public class Restaurant extends BaseEntity {
     @Size(min = 2, max = 100, message = "Length of name should be from 2 to 100 characters")
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @OneToMany(mappedBy = "restaurant")
+    @JsonIgnore
     private Set<Dish> dishes;
 }

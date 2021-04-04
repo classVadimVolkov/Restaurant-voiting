@@ -25,7 +25,7 @@ public class Dish extends BaseEntity {
     @Column(name = "price")
     private int price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
