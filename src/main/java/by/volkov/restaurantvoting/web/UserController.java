@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/api/users")
 @Slf4j
 @AllArgsConstructor
-public class AdminController {
+public class UserController {
 
     private final UserRepository userRepository;
 

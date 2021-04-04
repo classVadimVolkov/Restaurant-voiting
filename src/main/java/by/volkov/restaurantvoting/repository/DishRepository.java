@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.Set;
 
 @Transactional(readOnly = true)
 public interface DishRepository extends JpaRepository<Dish, Integer> {
@@ -18,5 +18,6 @@ public interface DishRepository extends JpaRepository<Dish, Integer> {
     int delete(int id, int restaurantId, int userId);
 
     @RestResource(rel = "by-restaurantId", path = "by-restaurantId")
-    List<Dish> getAllByRestaurantId(int restaurantId);
+    @Query("SELECT DISTINCT d FROM Dish d WHERE d.restaurant.id=:restaurantId")
+    Set<Dish> getAllByRestaurantId(int restaurantId);
 }

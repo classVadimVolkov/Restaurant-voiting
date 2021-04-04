@@ -2,6 +2,7 @@ package by.volkov.restaurantvoting.web;
 
 import by.volkov.restaurantvoting.AuthUser;
 import by.volkov.restaurantvoting.model.Restaurant;
+import by.volkov.restaurantvoting.repository.DishRepository;
 import by.volkov.restaurantvoting.repository.RestaurantRepository;
 import by.volkov.restaurantvoting.util.ValidationUtil;
 import lombok.AllArgsConstructor;
@@ -25,16 +26,17 @@ import java.util.Optional;
 public class RestaurantController {
 
     private final RestaurantRepository restaurantRepository;
+    private final DishRepository dishRepository;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Restaurant> getAllRestaurants() {
+    public List<Restaurant> getAll() {
         List<Restaurant> restaurants = restaurantRepository.findAll();
         log.info("get all {}", restaurants);
         return restaurants;
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Optional<Restaurant> getRestaurant(@PathVariable int id) {
+    public Optional<Restaurant> get(@PathVariable int id) {
         log.info("get Restaurant with id={}", id);
         return ValidationUtil.checkNotFoundWithId(restaurantRepository.findById(id), id);
     }
@@ -47,15 +49,15 @@ public class RestaurantController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteRestaurant(@AuthenticationPrincipal AuthUser authUser, @PathVariable int id) {
+    public void delete(@AuthenticationPrincipal AuthUser authUser, @PathVariable int id) {
         log.info("delete Restaurant with id={}", id);
         ValidationUtil.checkNotFoundWithId(restaurantRepository.delete(id, authUser.id()), id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Restaurant> createRestaurant(@AuthenticationPrincipal AuthUser authUser,
-                                                       @Valid @RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> create(@AuthenticationPrincipal AuthUser authUser,
+                                             @Valid @RequestBody Restaurant restaurant) {
         log.info("create {}", restaurant);
         ValidationUtil.checkNew(restaurant);
         restaurant.setUser(authUser.getUser());
@@ -68,15 +70,14 @@ public class RestaurantController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateRestaurant(@AuthenticationPrincipal AuthUser authUser,
-                                 @Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
+    public void update(@AuthenticationPrincipal AuthUser authUser,
+                       @Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
         log.info("update {} with id={}", restaurant, id);
         ValidationUtil.assureIdConsistent(restaurant, id);
         restaurant.setUser(authUser.getUser());
         if (restaurant.getDishes() == null) {
-            restaurant.setDishes(restaurantRepository.getOne(id).getDishes());
+            restaurant.setDishes(dishRepository.getAllByRestaurantId(id));
         }
-        log.info("updated {} with id={}", restaurant, id);
         ValidationUtil.checkNotFoundWithId(restaurantRepository.save(restaurant), id);
     }
 }
