@@ -29,14 +29,14 @@ public class AdminController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAllUsers() {
         List<User> users = userRepository.findAll();
-        log.info("get all users {}", users);
+        log.info("get all {}", users);
         return users;
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Optional<User> getUser(@PathVariable int id) {
         Optional<User> user = userRepository.findById(id);
-        log.info("get User {}", user);
+        log.info("get {}", user);
         return ValidationUtil.checkNotFoundWithId(user, id);
     }
 
@@ -50,7 +50,7 @@ public class AdminController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        log.info("create User {}", user);
+        log.info("create {}", user);
         ValidationUtil.checkNew(user);
         user.setRoles(Set.of(Role.USER));
         user = userRepository.save(user);
@@ -63,7 +63,7 @@ public class AdminController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateUser(@Valid @RequestBody User user, @PathVariable int id) {
-        log.info("update User {} with id={}", user, id);
+        log.info("update {} with id={}", user, id);
         User oldUser = userRepository.getOne(id);
         ValidationUtil.assureIdConsistent(user, oldUser.id());
         user.setRoles(oldUser.getRoles());

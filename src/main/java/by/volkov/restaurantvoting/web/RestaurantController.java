@@ -29,7 +29,7 @@ public class RestaurantController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Restaurant> getAllRestaurants() {
         List<Restaurant> restaurants = restaurantRepository.findAll();
-        log.info("get all restaurants {}", restaurants);
+        log.info("get all {}", restaurants);
         return restaurants;
     }
 
@@ -56,7 +56,7 @@ public class RestaurantController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Restaurant> createRestaurant(@AuthenticationPrincipal AuthUser authUser,
                                                        @Valid @RequestBody Restaurant restaurant) {
-        log.info("create Restaurant {}", restaurant);
+        log.info("create {}", restaurant);
         ValidationUtil.checkNew(restaurant);
         restaurant.setUser(authUser.getUser());
         restaurant = restaurantRepository.save(restaurant);
@@ -70,12 +70,13 @@ public class RestaurantController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateRestaurant(@AuthenticationPrincipal AuthUser authUser,
                                  @Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
-        log.info("update Restaurant {} with id={}", restaurant, id);
+        log.info("update {} with id={}", restaurant, id);
         ValidationUtil.assureIdConsistent(restaurant, id);
         restaurant.setUser(authUser.getUser());
         if (restaurant.getDishes() == null) {
             restaurant.setDishes(restaurantRepository.getOne(id).getDishes());
         }
+        log.info("updated {} with id={}", restaurant, id);
         ValidationUtil.checkNotFoundWithId(restaurantRepository.save(restaurant), id);
     }
 }
