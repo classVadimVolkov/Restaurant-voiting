@@ -1,5 +1,6 @@
 package by.volkov.restaurantvoting.web;
 
+import by.volkov.restaurantvoting.AuthUser;
 import by.volkov.restaurantvoting.model.Role;
 import by.volkov.restaurantvoting.model.User;
 import by.volkov.restaurantvoting.repository.UserRepository;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -25,6 +27,7 @@ import java.util.Set;
 public class AdminController {
 
     private final UserRepository userRepository;
+    private final UserDetailsService userDetailsService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAllUsers() {
@@ -64,12 +67,14 @@ public class AdminController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateUser(@Valid @RequestBody User user, @PathVariable int id) {
         log.info("update {} with id={}", user, id);
-        User oldUser = userRepository.getOne(id);
-        ValidationUtil.assureIdConsistent(user, oldUser.id());
+        AuthUser authUser = (AuthUser) userDetailsService.loadUserByUsername(userRepository.findById(id).get().getEmail());
+        User oldUser = authUser.getUser();
+        ValidationUtil.assureIdConsistent(user, id);
         user.setRoles(oldUser.getRoles());
         if (user.getPassword() == null) {
             user.setPassword(oldUser.getPassword());
         }
+        log.info("updated {} with id={}", user, id);
         ValidationUtil.checkNotFoundWithId(userRepository.save(user), id);
     }
 
