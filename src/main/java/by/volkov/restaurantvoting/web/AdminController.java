@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/admin/users")
+@RequestMapping("/api/users")
 @Slf4j
 @AllArgsConstructor
 public class AdminController {
